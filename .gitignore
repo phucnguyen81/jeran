@@ -1,5 +1,8 @@
 # Eclipse
 /.project
+/.classpath
+/target/
+/.settings/
 
 # Vim swap file
 *.swp
