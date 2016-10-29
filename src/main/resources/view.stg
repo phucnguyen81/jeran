@@ -1,0 +1,149 @@
+delimiters "$", "$"
+
+html(tables, charset="utf-8", title="Jeran") ::= <<
+<!DOCTYPE html>
+<html lang="en">
+$head(charset, title)$
+$body(tables)$
+</html>
+>>
+
+head(charset, title) ::= <<
+<head>  
+<meta charset="$charset$">  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>$title$</title>
+
+<!-- jquery -->
+<script data-require="jquery@3.0.0" data-semver="3.0.0" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
+
+<!-- Bootstrap Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Bootstrap Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Bootstrap Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<!-- for sql syntax hightlight and editor -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/codemirror.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/codemirror.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/mode/sql/sql.js"></script>
+  
+<link rel="stylesheet" href="view.css">
+<script src="view.js"></script>
+</head>
+>>
+
+body(tables) ::= <<
+<body>
+
+<nav class="navbar navbar-fixed-top">
+  <div class="container">
+    <div class="collapse navbar-collapse">
+      <ul class="nav nav-pills" role="tablist">
+        <li role="presentation" class="active"><a href="#tables" aria-controls="tables" role="tab" data-toggle="tab">Tables</a></li>
+        <li role="presentation"><a href="#excercises" aria-controls="exercises" role="tab" data-toggle="tab">Excercises</a></li>
+        <li role="presentation"><a href="#session" aria-controls="session" role="tab" data-toggle="tab">Session</a></li>
+      </ul>
+    </div><!-- /.nav-collapse -->
+  </div><!-- /.container -->
+</nav>
+
+<!-- add an empty nav here to account for the fixed-top nav -->
+<nav class="navbar"></nav>
+
+<div class="container tab-content">
+  <div role="tabpanel" class="tab-pane active" id="tables">
+    $tables(tables)$
+  </div>
+  <div role="tabpanel" class="tab-pane active" id="excercises">
+    $excercises()$
+  </div>
+  <div role="tabpanel" class="tab-pane" id="session">
+    $session()$
+  </div>
+</div>
+
+</body>
+>>
+
+tables(tables) ::= <<
+$tables:tableWithName();separator="\n\n"$
+>>
+
+excercises() ::= <<
+<div class="row">
+  <div class="col-lg-4">
+    <h2>Excercise 5.11</h2>
+    <p>Imagine that the tennis club has classified all the penalties in three categories. 
+    The category low contains all the penalties from 0 up to 40, 
+    the category moderate contains those between 41 up to 80, 
+    and the category high contains all the penalties higher than 80. 
+    Next, find for each penalty the payment number, the amount, and the matching category.</p>
+  </div>
+  <div class="col-lg-4">
+    <h2>Excercise 6.10</h2>
+    <p>Get the numbers of the committee members who were secretary of the tennis club 
+    between January 1, 1990, and December 31, 1994; use subqueries here.</p>
+  </div>
+  <div class="col-lg-4">
+    <h2>Excercise 6.11</h2>
+    <p>Get the numbers of the teams of which the player with the name Parmenter and initial R is captain; 
+    in this example, we assume that there are no two players with the same name and initials.</p>
+  </div>
+</div>
+>>
+
+session() ::= <<
+<h2>Description</h2>
+<textarea class='form-control vert' rows='10'></textarea>
+
+<h2>SQL</h2>
+<!-- This prototype panel is cloned to make other panels -->
+<div id="panel-prototype" name="panel" class="panel row prototype">
+  <div class="col-lg-4">
+    <div name="input" class="inputpanel"></div>
+    <button name="submit" class="btn btn-info">Submit</button>
+    <button name="add" class="btn btn-info">Add</button>
+    <button name="delete" class="btn btn-info">Delete</button>
+  </div>
+  <div class="col-lg-8">
+    <div name="output" class="table-responsive"></div>
+  </div>
+</div>
+>>
+
+tableWithName(table) ::= <<
+<h2>$table.name$</h2>
+<div class="table-responsive">
+  $table(table)$
+</div>
+>>
+
+table(table) ::= <<
+<table class="table table-striped table-bordered table-hover">
+  $tableHeader(table.header)$
+  $tableBody(table.rows)$
+</table>
+>>
+
+tableHeader(header) ::= <<
+<thead>
+  <tr>
+    $header:{h|<th>$h$</th>};separator="\n"$
+  </tr>
+</thead>
+>>
+
+tableBody(rows) ::= <<
+<tbody>
+  $rows:tableRow();separator="\n"$
+</tbody>
+>>
+
+tableRow(row) ::= <<
+<tr>
+  $row:{v|<td>$v$</td>};separator="\n"$
+</tr>
+>>

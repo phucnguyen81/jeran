@@ -1,0 +1,9 @@
+nav { background: lightgray; }
+
+textarea.vert { resize: vertical; }
+
+.CodeMirror { height: auto; }
+
+.inputpanel { border: 1px solid lightgray; }
+
+.prototype { display: none; }
