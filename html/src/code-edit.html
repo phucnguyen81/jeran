@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+
+  <title>Code Mirror Editor</title>
+
+  <!-- code mirror core -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/codemirror.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/codemirror.js"></script>
+
+  <!-- code mirror language modes -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/mode/python/python.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/mode/sql/sql.js"></script>  
+</head>
+
+<body>  
+  <h1>Python Editor</h1>
+  <div id="python"></div>
+
+  <h1>SQL Editor</h1>
+  <div id="sql"></div>
+
+  <script type="text/javascript">
+    var pyCm = CodeMirror(document.getElementById('python'), {
+      mode: "python",
+      indentWithTabs: false,
+      tabSize: 4,
+      lineNumbers: true,
+    });
+
+    var sqlCm = CodeMirror(document.getElementById('sql'), {
+      mode: "text/x-sql",
+      indentWithTabs: false,
+      tabSize: 2,
+      lineNumbers: true,
+    });
+  </script>
+</body>
+
+</html>
