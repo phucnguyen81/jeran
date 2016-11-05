@@ -6,18 +6,35 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.function.IntFunction;
+
+import org.lou.jeran.util.Sql;
 
 /**
  * How the app sees the database.
  * <p>
- * This must be thread-safe. Since Connection is not guaranteed to be
- * thread-safe, for now this would create a new connection for every request.
- * TODO replace DriverMangager with DataSource with connection-pool.
+ * This must be thread-safe. Since Connection might not be thread-safe, for now
+ * this would create a new connection for every request.
  *
  * @author Phuc
  */
 public class Db {
+
+	/**
+	 * Create an in-mem db given a script for initializing data
+	 */
+	public static Db h2(String name, String initScript) throws Exception {
+		// use DB_CLOSE_DELAY=-1 to keep the db open
+		String url = String.format("jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1", name);
+		Db db = new Db(new org.h2.Driver(), url, "", "");
+
+		// init the db by executing the sql script
+		List<String> stmts = Sql.splitStatements(initScript);
+		db.execStmtsAsUnit(stmts);
+
+		return db;
+	}
 
 	private final String url;
 	private final String user;
@@ -75,6 +92,36 @@ public class Db {
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);) {
 			return mpr.map(rs);
+		}
+	}
+
+	/**
+	 * Execute sql-statements as a unit, i.e. commit if all succeed, rollback on
+	 * error
+	 */
+	public void execStmtsAsUnit(Iterable<String> stmts) throws SQLException {
+		try (Connection conn = newConnection()) {
+			execStmtsAsUnit(conn, stmts);
+		}
+	}
+
+	/**
+	 * Execute sql-statements as a unit, i.e. commit if all succeed, rollback on
+	 * error
+	 */
+	public static void execStmtsAsUnit(Connection conn, Iterable<String> stmts) throws SQLException {
+		boolean autoCommit = conn.getAutoCommit();
+		try (Statement stmt = conn.createStatement()) {
+			conn.setAutoCommit(false);
+			for (String s : stmts) {
+				stmt.execute(s);
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			conn.rollback();
+			throw new SQLException("Connection rollbacked on exception: " + e.getMessage(), e);
+		} finally {
+			conn.setAutoCommit(autoCommit);
 		}
 	}
 

@@ -7,11 +7,12 @@ import javax.servlet.annotation.WebListener;
 
 import org.lou.jeran.Db;
 import org.lou.jeran.View;
+import org.lou.jeran.util.IO;
 
 /**
  * Create/release resources global to the app.
  * <p>
- * TODO externalize database parameters. TODO use server log
+ * TODO use server log for logging?
  *
  * @author Phuc
  */
@@ -23,8 +24,10 @@ public class ContextListener implements ServletContextListener {
 		ServletContext ctx = sce.getServletContext();
 		ctx.setAttribute(View.class.getName(), new View());
 		try {
-			Db db = new Db("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/TENNIS?useSSL=false", "BOOKSQL",
-					"BOOKSQLPWD");
+			// loads the script to init db
+			String sql = IO.readFromClasspath("/reset_db_h2.sql");
+			Db db = Db.h2("TENNIS", sql);
+
 			ctx.setAttribute(Db.class.getName(), db);
 		} catch (Exception e) {
 			throw new AssertionError("Failed to connect to database", e);
@@ -36,11 +39,11 @@ public class ContextListener implements ServletContextListener {
 		ServletContext ctx = sce.getServletContext();
 		Object view = ctx.getAttribute(View.class.getName());
 		if (view == null) {
-			ctx.log("Required template attribute not found: " + View.class.getName());
+			ctx.log("", new IllegalStateException("Required template not found: " + View.class.getName()));
 		}
 		Object db = ctx.getAttribute(Db.class.getName());
 		if (db == null) {
-			ctx.log("Required database not found: " + Db.class.getName());
+			ctx.log("", new IllegalStateException("Required database not found: " + Db.class.getName()));
 		}
 	}
 

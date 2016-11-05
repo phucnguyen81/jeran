@@ -1,20 +1,25 @@
 package org.lou.jeran;
 
 import org.junit.Test;
-import org.lou.jeran.Db;
+
+import org.lou.jeran.util.IO;
 
 /**
- * TODO use in-memory db
+ * Since the 'production' db is so small, can test it directly.
  *
- * @author Phuc
+ * @author phuc
  */
-public class DbTest {
+public class DbTest extends TestBase {
 
 	@Test
 	public void canRunQuery() throws Exception {
-		Db db = new Db("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/TENNIS?useSSL=false", "BOOKSQL", "BOOKSQLPWD");
-		Object m = db.query("SELECT * FROM PLAYERS LIMIT 5", rs -> rs.getMetaData());
-		System.out.println(m);
+		String sql = IO.readFromClasspath("/reset_db_h2.sql");
+		Db db = Db.h2("TENNIS", sql);
+
+		db.query("SELECT * FROM PLAYERS LIMIT 5", rs -> {
+			assertEquals("Column count changed!", 12, rs.getMetaData().getColumnCount());
+			return rs;
+		});
 	}
 
 }
