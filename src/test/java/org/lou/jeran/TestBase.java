@@ -14,13 +14,13 @@ import org.junit.Assert;
  */
 public class TestBase extends Assert {
 
-	public static <T> Collector<T, ?, List<T>> toList() {
-		return Collectors.toList();
-	}
+    public static <T> Collector<T, ?, List<T>> toList() {
+        return Collectors.toList();
+    }
 
-	@SafeVarargs
-	public static <T> List<T> asList(T... a) {
-		return Arrays.asList(a);
-	}
+    @SafeVarargs
+    public static <T> List<T> asList(T... a) {
+        return Arrays.asList(a);
+    }
 
 }

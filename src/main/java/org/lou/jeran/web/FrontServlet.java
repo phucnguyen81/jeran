@@ -25,78 +25,78 @@ import org.lou.jeran.View;
 @WebServlet(asyncSupported = false, name = "FrontServlet", urlPatterns = { "/main/*" })
 public final class FrontServlet extends HttpServlet {
 
-	@Override
-	public String getServletInfo() {
-		return "@Phuc 2016";
-	}
+    @Override
+    public String getServletInfo() {
+        return "@Phuc 2016";
+    }
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		process(request, response);
-	}
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        process(request, response);
+    }
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		process(request, response);
-	}
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        process(request, response);
+    }
 
-	private void process(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/html;charset=utf-8");
-		try (PrintWriter out = response.getWriter()) {
-			out.write(response(request));
-		}
-	}
+    private void process(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        try (PrintWriter out = response.getWriter()) {
+            out.write(response(request));
+        }
+    }
 
-	private String response(HttpServletRequest req) {
-		String path = getPath(req);
-		Map<String, String[]> parms = req.getParameterMap();
-		try {
-			Db db = getContextAttr(Db.class);
-			View view = getContextAttr(View.class);
-			return Core.response(path, parms, db, view);
-		} catch (IllegalStateException | IllegalArgumentException ise) {
-			return errorMessage("Application error", ise);
-		} catch (SQLException sql) {
-			return errorMessage("Database error", sql);
-		} catch (Throwable th) {
-			return errorMessage("Server error", th);
-		}
-	}
+    private String response(HttpServletRequest req) {
+        String path = getPath(req);
+        Map<String, String[]> parms = req.getParameterMap();
+        try {
+            Db db = getContextAttr(Db.class);
+            View view = getContextAttr(View.class);
+            return Core.response(path, parms, db, view);
+        } catch (IllegalStateException | IllegalArgumentException ise) {
+            return errorMessage("Application error", ise);
+        } catch (SQLException sql) {
+            return errorMessage("Database error", sql);
+        } catch (Throwable th) {
+            return errorMessage("Server error", th);
+        }
+    }
 
-	/**
-	 * Get the path-info; use empty-string for null and remove the "/"
-	 */
-	private static String getPath(HttpServletRequest req) {
-		final String p = req.getPathInfo();
-		if (p == null) {
-			return "";
-		} else if (p.startsWith("/")) {
-			return p.replaceFirst("/", "");
-		} else {
-			return p;
-		}
-	}
+    /**
+     * Get the path-info; use empty-string for null and remove the "/"
+     */
+    private static String getPath(HttpServletRequest req) {
+        final String p = req.getPathInfo();
+        if (p == null) {
+            return "";
+        } else if (p.startsWith("/")) {
+            return p.replaceFirst("/", "");
+        } else {
+            return p;
+        }
+    }
 
-	/**
-	 * Retrieve app-services initialized with {@link ContextListener}.
-	 */
-	private <T> T getContextAttr(Class<T> type) {
-		Object attr = getServletContext().getAttribute(type.getName());
-		if (attr == null) {
-			String msg = String.format("Resource type %s not initialized", type.getName());
-			throw new IllegalStateException(msg);
-		} else {
-			return type.cast(attr);
-		}
-	}
+    /**
+     * Retrieve app-services initialized with {@link ContextListener}.
+     */
+    private <T> T getContextAttr(Class<T> type) {
+        Object attr = getServletContext().getAttribute(type.getName());
+        if (attr == null) {
+            String msg = String.format("Resource type %s not initialized", type.getName());
+            throw new IllegalStateException(msg);
+        } else {
+            return type.cast(attr);
+        }
+    }
 
-	private String errorMessage(String type, Throwable cause) {
-		String msg = String.format("<p style='color:red;'>%s: %s<p>", type, cause.getMessage());
-		log(msg, cause);
-		return msg;
-	}
+    private String errorMessage(String type, Throwable cause) {
+        String msg = String.format("<p style='color:red;'>%s: %s<p>", type, cause.getMessage());
+        log(msg, cause);
+        return msg;
+    }
 
 }
