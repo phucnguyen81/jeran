@@ -3,7 +3,7 @@ Help me do excercises in 'Introduction to SQL'
 
 # Usage
 launch:
-maven jetty:run
+$ maven jetty:run
 
-default launch at:
-localhost:8080
+will launch at:
+  localhost:8080

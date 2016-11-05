@@ -12,10 +12,7 @@ import java.util.function.IntFunction;
 import org.lou.jeran.util.Sql;
 
 /**
- * How the app sees the database.
- * <p>
- * This must be thread-safe. Since Connection might not be thread-safe, for now
- * this would create a new connection for every request.
+ * For now, create a new connection for every operation.
  *
  * @author Phuc
  */
@@ -29,7 +26,7 @@ public class Db {
 		String url = String.format("jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1", name);
 		Db db = new Db(new org.h2.Driver(), url, "", "");
 
-		// init the db by executing the sql script
+		// init the db by executing a script
 		List<String> stmts = Sql.splitStatements(initScript);
 		db.execStmtsAsUnit(stmts);
 
@@ -40,25 +37,11 @@ public class Db {
 	private final String user;
 	private final String password;
 
-	public Db(String driverClass, String url, String user, String password) throws Exception {
-		this(loadDriver(driverClass), url, user, password);
-	}
-
 	public Db(Driver driver, String url, String user, String password) throws Exception {
 		loadDriver(driver);
 		this.url = url;
 		this.user = user;
 		this.password = password;
-	}
-
-	/**
-	 * Load the driver without having it on classpath so that the actual class
-	 * can be swapped out or provided at deployment location.
-	 * <p>
-	 * The newInstance() call is a work-around for noncompliant JVMs.
-	 */
-	private static Driver loadDriver(String driverClass) throws Exception {
-		return (Driver) Class.forName(driverClass).newInstance();
 	}
 
 	/**

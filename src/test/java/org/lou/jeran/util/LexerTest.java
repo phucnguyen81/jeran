@@ -1,21 +1,18 @@
 package org.lou.jeran.util;
 
-import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import org.junit.Test;
-import org.lou.jeran.util.Lexer;
+
+import org.lou.jeran.TestBase;
 import org.lou.jeran.util.Lexer.Match;
 
-public class LexerTest {
+public class LexerTest extends TestBase {
 
 	@Test
-	public void singlePattern1() throws Exception {
+	public void singlePattern() throws Exception {
 		List<Pattern> patterns = asList(Pattern.compile("ab"));
 		Match match = Lexer.scan("ab", patterns);
 		assertEquals(asList("ab"), tokenStrings(match));
@@ -50,8 +47,6 @@ public class LexerTest {
 	 * Extract the matched strings from tokens
 	 */
 	private static List<CharSequence> tokenStrings(Match m) {
-		List<CharSequence> tokens = new ArrayList<>();
-		m.tokens.forEach(t -> tokens.add(t.text));
-		return tokens;
+		return m.tokens.stream().map(t -> t.text).collect(toList());
 	}
 }
