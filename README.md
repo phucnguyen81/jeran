@@ -2,8 +2,8 @@
 Help me do excercises in 'Introduction to SQL'
 
 # Usage
-launch:
-$ maven jetty:run
+Launch:
+$ mvn jetty:run
 
-will launch at:
-  localhost:8080
+Launch at:
+http://localhost:8080/jeran/main
