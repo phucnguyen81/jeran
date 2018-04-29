@@ -15,7 +15,7 @@ public class IO {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     public static String readFromClasspath(String path) throws IOException {
-        try (InputStream is = Sql.class.getResourceAsStream(path)) {
+        try (InputStream is = IO.class.getResourceAsStream(path)) {
             if (is == null) {
                 throw new IOException("No resource found at " + path);
             }

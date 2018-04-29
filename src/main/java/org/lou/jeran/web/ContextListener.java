@@ -1,5 +1,7 @@
 package org.lou.jeran.web;
 
+import java.io.IOException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -22,7 +24,11 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
-        ctx.setAttribute(View.class.getName(), new View());
+        try {
+            ctx.setAttribute(View.class.getName(), new View());
+        } catch (IOException e) {
+            throw new AssertionError("Failed to create view", e);
+        }
         try {
             // loads the script to init db
             String sql = IO.readFromClasspath("/reset_db_h2.sql");

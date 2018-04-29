@@ -1,10 +1,10 @@
 delimiters "$", "$"
 
-html(tables, charset="utf-8", title="Jeran") ::= <<
+html(tables, exercies="", charset="utf-8", title="Jeran") ::= <<
 <!DOCTYPE html>
 <html lang="en">
 $head(charset, title)$
-$body(tables)$
+$body(tables, exercies)$
 </html>
 >>
 
@@ -35,7 +35,7 @@ head(charset, title) ::= <<
 </head>
 >>
 
-body(tables) ::= <<
+body(tables, exercies) ::= <<
 <body>
 
 <nav class="navbar navbar-fixed-top">
@@ -43,7 +43,7 @@ body(tables) ::= <<
     <div class="collapse navbar-collapse">
       <ul class="nav nav-pills" role="tablist">
         <li role="presentation" class="active"><a href="#tables" aria-controls="tables" role="tab" data-toggle="tab">Tables</a></li>
-        <li role="presentation"><a href="#excercises" aria-controls="exercises" role="tab" data-toggle="tab">Excercises</a></li>
+        <li role="presentation"><a href="#exercises" aria-controls="exercises" role="tab" data-toggle="tab">Exercises</a></li>
         <li role="presentation"><a href="#session" aria-controls="session" role="tab" data-toggle="tab">Session</a></li>
       </ul>
     </div><!-- /.nav-collapse -->
@@ -57,8 +57,8 @@ body(tables) ::= <<
   <div role="tabpanel" class="tab-pane active" id="tables">
     $tables(tables)$
   </div>
-  <div role="tabpanel" class="tab-pane active" id="excercises">
-    $excercises()$
+  <div role="tabpanel" class="tab-pane active" id="exercises">
+    $exercises(exercies)$
   </div>
   <div role="tabpanel" class="tab-pane" id="session">
     $session()$
@@ -72,27 +72,8 @@ tables(tables) ::= <<
 $tables:tableWithName();separator="\n\n"$
 >>
 
-excercises() ::= <<
-<div class="row">
-  <div class="col-lg-4">
-    <h2>Excercise 5.11</h2>
-    <p>Imagine that the tennis club has classified all the penalties in three categories. 
-    The category low contains all the penalties from 0 up to 40, 
-    the category moderate contains those between 41 up to 80, 
-    and the category high contains all the penalties higher than 80. 
-    Next, find for each penalty the payment number, the amount, and the matching category.</p>
-  </div>
-  <div class="col-lg-4">
-    <h2>Excercise 6.10</h2>
-    <p>Get the numbers of the committee members who were secretary of the tennis club 
-    between January 1, 1990, and December 31, 1994; use subqueries here.</p>
-  </div>
-  <div class="col-lg-4">
-    <h2>Excercise 6.11</h2>
-    <p>Get the numbers of the teams of which the player with the name Parmenter and initial R is captain; 
-    in this example, we assume that there are no two players with the same name and initials.</p>
-  </div>
-</div>
+exercises(exercies) ::= <<
+$exercies$
 >>
 
 session() ::= <<

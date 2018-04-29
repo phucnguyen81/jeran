@@ -1,3 +1,7 @@
+## Load exercies from markdown file
+Load the markdown file, convert it to html and inject it to template.
+Process the html to add Bootstrap classes.
+
 ## Make launcher
 Should be able to run like a jar.
 When ran, pick an available port and tell the user to go there.

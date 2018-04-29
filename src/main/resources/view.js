@@ -1,3 +1,33 @@
+// Add style to the Exercises section (using Bootstrap)
+$(function() {
+    var $exercises = $('#exercises');
+    
+    // wrap each exercise to make a column
+    $exercises.find('h3').each((idx, exer) => {
+        $(exer).nextUntil('h3').addBack()
+            .wrapAll('<div class="col-lg-4 col-md-6"></div>');
+    });
+
+    // reset columns so that columns that does not fit on current line
+    // would be properly moved to next line 
+    $exercises.children('div').each((idx, col) => {
+        if (idx === 0) return;
+        let $col = $(col);
+        if (idx % 3 === 0) {
+            // reset columns for lg size
+            $col.before('<div class="clearfix visible-lg-block"></div>');
+        }
+        if (idx % 2 === 0) {
+            // reset columns for md size
+            $col.before('<div class="clearfix visible-md-block"></div>');
+        }
+    });
+
+    // make a single row
+    $exercises.wrapInner('<div class="row"></div>');
+});
+
+// Add actions to the Session section
 $(function() {
 
 	var panels = function() {
@@ -55,7 +85,8 @@ $(function() {
 		} else if (action == "add") {
 			insertCodeMirrorAfter(panel);
 		} else if (action == "delete") {
-			// delete this panel only if there are panels other than this one and the prototype
+			// delete this panel only if there are panels other than this one 
+			// and the prototype
 			if (panels().length > 2) {
 				panel.remove();
 			}

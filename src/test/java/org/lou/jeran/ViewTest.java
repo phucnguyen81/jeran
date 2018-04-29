@@ -15,12 +15,12 @@ import org.junit.Test;
 public class ViewTest {
 
     @Test
-    public void constructor() {
+    public void constructor() throws Exception {
         new View();
     }
 
     @Test
-    public void table() {
+    public void table() throws Exception {
         List<String> header = asList("A", "B");
         List<Object> row1 = asList("a1", "b1");
         List<Object> row2 = asList("a2", "b2");
