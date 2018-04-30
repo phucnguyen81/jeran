@@ -53,17 +53,16 @@ Get the numbers of the committee members who were secretary of the tennis club
 between January 1, 1990, and December 31, 1994; use subqueries here.
 
 ### Excercise 6.11
-Get the numbers of the teams of which the player with the name Parmenter and initial R is captain; 
-in this example, we assume that there are no two players with the same name and initials.
-
-### Example 10.4 
-For each team that is captained by a player resident in Eltham, 
-get the team number and the number of matches that has been played for that team.
-
-### Example 10.5
-Get each different penalty amount, followed by the number of times that the amount occurs, 
-in the PENALTIES table, and also show the result of that amount multiplied by the number.
+Get the numbers of the teams of which the player with the name Parmenter 
+and initial R is captain; in this example, we assume that there are no two 
+players with the same name and initials.
 
 ### Exercise 10.4
 For each team that has played in the first division, give the team number, 
 the number of matches, and the total number of sets won.
+
+### Exercise 10.5
+For each combination of wonlost sets, get the number of matches won.
+
+### Exercise 10.9
+For each team, get the team number, the division, and the total number of sets won.

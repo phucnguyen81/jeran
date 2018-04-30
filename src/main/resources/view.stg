@@ -1,10 +1,10 @@
 delimiters "$", "$"
 
-html(tables, exercies="", charset="utf-8", title="Jeran") ::= <<
+html(tables, exercises="", examples="", charset="utf-8", title="Jeran") ::= <<
 <!DOCTYPE html>
 <html lang="en">
 $head(charset, title)$
-$body(tables, exercies)$
+$body(tables, exercises, examples)$
 </html>
 >>
 
@@ -42,7 +42,7 @@ head(charset, title) ::= <<
 </head>
 >>
 
-body(tables, exercies) ::= <<
+body(tables, exercises, examples) ::= <<
 <body>
 
 <nav class="navbar navbar-fixed-top">
@@ -50,8 +50,9 @@ body(tables, exercies) ::= <<
     <div class="navbar-collapse">
       <ul class="nav nav-pills" role="tablist">
         <li role="presentation" class="active"><a href="#tables" aria-controls="tables" role="tab" data-toggle="tab">Tables</a></li>
-        <li role="presentation"><a href="#exercises" aria-controls="exercises" role="tab" data-toggle="tab">Exercises</a></li>
         <li role="presentation"><a href="#session" aria-controls="session" role="tab" data-toggle="tab">Session</a></li>
+        <li role="presentation"><a href="#examples" aria-controls="examples" role="tab" data-toggle="tab">Examples</a></li>
+        <li role="presentation"><a href="#exercises" aria-controls="exercises" role="tab" data-toggle="tab">Exercises</a></li>
       </ul>
     </div><!-- /.nav-collapse -->
   </div><!-- /.container -->
@@ -64,11 +65,14 @@ body(tables, exercies) ::= <<
   <div role="tabpanel" class="tab-pane active" id="tables">
     $tables(tables)$
   </div>
-  <div role="tabpanel" class="tab-pane active" id="exercises">
-    $exercises(exercies)$
-  </div>
   <div role="tabpanel" class="tab-pane" id="session">
     $session()$
+  </div>
+  <div role="tabpanel" class="tab-pane active" id="examples">
+    $examples(examples)$
+  </div>
+  <div role="tabpanel" class="tab-pane active" id="exercises">
+    $exercises(exercises)$
   </div>
 </div>
 
@@ -79,8 +83,12 @@ tables(tables) ::= <<
 $tables:tableWithName();separator="\n\n"$
 >>
 
-exercises(exercies) ::= <<
-$exercies$
+examples(examples) ::= <<
+$examples$
+>>
+
+exercises(exercises) ::= <<
+$exercises$
 >>
 
 session() ::= <<

@@ -21,18 +21,22 @@ import org.stringtemplate.v4.STGroupFile;
 public class View {
 
     private final STGroupFile stg;
-    private final String exercies;
+    private final String exercises;
+    private final String examples;
 
     public View() throws IOException {
         this.stg = new STGroupFile("view.stg");
-        String markdown = IO.readFromClasspath("/exercies.md");
-        this.exercies = Util.fromMarkdownToHtml(markdown);
+        String exercisesMarkdown = IO.readFromClasspath("/exercies.md");
+        this.exercises = Util.fromMarkdownToHtml(exercisesMarkdown);
+        String examplesMarkdown = IO.readFromClasspath("/examples.md");
+        this.examples = Util.fromMarkdownToHtml(examplesMarkdown);
     }
 
     public String html(List<Table> tables) {
         tables = noNulls(tables);
         return get("html").add("tables", tables)
-            .add("exercies", exercies).render();
+            .add("exercises", exercises).add("examples", examples)
+            .render();
     }
 
     public String table(Table table) {
