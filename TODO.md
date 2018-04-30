@@ -1,14 +1,20 @@
-## Load exercies from markdown file
-Load the markdown file, convert it to html and inject it to template.
-Process the html to add Bootstrap classes.
+## DONE Style the sql syntax in the exercise
+This is done using the Prism library to do syntax highlighting.
 
 ## Make launcher
-Should be able to run like a jar.
+Run with shell script.
 When ran, pick an available port and tell the user to go there.
 
-## Snippets
-Some common sql statements for references.
+## Add a section for examples
+Show syntax and common statements for references.
 
 ## Find all relevant tables
 Currently use hard-coded table names.
-Would be more general to find all tables from database metadata.
+Would be more general to find the relevant tables (from database metadata).
+
+## DONE Load exercies from markdown file
+Load the markdown file, convert it to html and inject it to template.
+Process the html to style/enhance it.
+
+## DONE Navigation buttons disappear when the view gets too small (medium size)
+Fix: remove the class .collapse from navbar.

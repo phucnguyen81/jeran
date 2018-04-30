@@ -25,13 +25,20 @@ head(charset, title) ::= <<
 <!-- Bootstrap Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-<!-- for sql syntax hightlight and editor -->
+<!-- sql editor with syntax highlighting -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/codemirror.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/codemirror.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/mode/sql/sql.js"></script>
-  
+
+<!-- static syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/themes/prism.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/prism.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.14.0/components/prism-sql.js"></script>
+
+<!-- local resources -->
 <link rel="stylesheet" href="view.css">
 <script src="view.js"></script>
+
 </head>
 >>
 
@@ -39,8 +46,8 @@ body(tables, exercies) ::= <<
 <body>
 
 <nav class="navbar navbar-fixed-top">
-  <div class="container">
-    <div class="collapse navbar-collapse">
+  <div class="container-fluid">
+    <div class="navbar-collapse">
       <ul class="nav nav-pills" role="tablist">
         <li role="presentation" class="active"><a href="#tables" aria-controls="tables" role="tab" data-toggle="tab">Tables</a></li>
         <li role="presentation"><a href="#exercises" aria-controls="exercises" role="tab" data-toggle="tab">Exercises</a></li>
@@ -53,7 +60,7 @@ body(tables, exercies) ::= <<
 <!-- add an empty nav here to account for the fixed-top nav -->
 <nav class="navbar"></nav>
 
-<div class="container tab-content">
+<div class="container-fluid tab-content">
   <div role="tabpanel" class="tab-pane active" id="tables">
     $tables(tables)$
   </div>
@@ -85,7 +92,7 @@ session() ::= <<
 <div id="panel-prototype" name="panel" class="panel row prototype">
   <div class="col-lg-4">
     <div name="input" class="inputpanel"></div>
-    <button name="submit" class="btn btn-info">Submit</button>
+    <button name="run" class="btn btn-info">Run</button>
     <button name="add" class="btn btn-info">Add</button>
     <button name="delete" class="btn btn-info">Delete</button>
   </div>

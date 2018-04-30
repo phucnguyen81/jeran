@@ -25,8 +25,8 @@ public class Core {
     public static String response(String path, Map<String, String[]> parms, Db db, View view) throws SQLException {
         if (path.equals("")) {
             return view.html(queryTables(db));
-        } else if (path.equals("submit") && parms.containsKey("sql")) {
-            return submit(parms.get("sql"), db, view);
+        } else if (path.equals("run") && parms.containsKey("sql")) {
+            return run(parms.get("sql"), db, view);
         } else {
             String msg = String.format("Unrecognized path/parms %s %s", path, parms);
             throw new IllegalArgumentException(msg);
@@ -47,7 +47,7 @@ public class Core {
         return tables;
     }
 
-    private static String submit(String[] sqls, Db db, View view) throws SQLException {
+    private static String run(String[] sqls, Db db, View view) throws SQLException {
         if (sqls.length == 0 || isBlank(sqls[0])) {
             return "";
         } else {
