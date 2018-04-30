@@ -83,7 +83,7 @@ public class Core {
 
         List<String> header = new ArrayList<>();
         for (int i = 1; i <= size; i++) {
-            header.add(meta.getColumnName(i));
+            header.add(meta.getColumnLabel(i));
         }
 
         List<List<Object>> rows = new ArrayList<>();
