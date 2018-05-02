@@ -32,7 +32,7 @@ public class CommonMarkTest {
         Node document = parser.parse(markdown);
         HtmlRenderer renderer = HtmlRenderer.builder().build();
         String html = renderer.render(document);
-        assertTrue(html.contains("<h3>Exercies 5.11</h3>"));
+        assertTrue(html.contains("<h3>Exercise 5.11</h3>"));
     }
 
 }

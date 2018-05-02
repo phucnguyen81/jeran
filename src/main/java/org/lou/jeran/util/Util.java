@@ -15,6 +15,13 @@ import org.commonmark.renderer.html.HtmlRenderer;
  */
 public class Util {
 
+    public static String fromMarkdownToHtml(String markdown) {
+        Parser parser = Parser.builder().build();
+        Node document = parser.parse(markdown);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return renderer.render(document);
+    }
+
     /**
      * Like splitting a string on a pattern, this splits a sequence on element
      * matching a predicate.
@@ -38,11 +45,8 @@ public class Util {
         return runs;
     }
 
-    public static String fromMarkdownToHtml(String markdown) {
-        Parser parser = Parser.builder().build();
-        Node document = parser.parse(markdown);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        return renderer.render(document);
+    public static boolean isBlank(String str) {
+        return str == null || str.length() == 0;
     }
 
 }

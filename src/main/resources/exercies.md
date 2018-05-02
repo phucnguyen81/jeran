@@ -66,3 +66,45 @@ For each combination of wonlost sets, get the number of matches won.
 
 ### Exercise 10.9
 For each team, get the team number, the division, and the total number of sets won.
+
+### Exercise 10.10
+Group the players on the length of their names and get the number of players 
+for each length.
+
+### Exercise 10.11
+For each match, determine the difference between the number of sets won and lost, 
+and group the matches on that difference.
+
+### Exercise 11.1
+In which town do more than four players live? 
+
+### Exercise 11.2
+Get the player number of each player who has incurred more than $150 in penalties. 
+
+### Exercise 11.3
+Get the name, initials, and number of penalties of each player 
+who has incurred more than one penalty. 
+
+### Exercise 11.4
+Get the number of the team for which most players have played, 
+and give the number of players who have played for this team. 
+
+### Exercise 11.5
+Get the team number and the division of each team for which more than four 
+players have competed. 
+
+### Exercise 11.6
+Get the name and initials of each player who has incurred two or 
+more penalties of more than $40. 
+
+### Exercise 11.7
+Get the name and initials of each player whose total amount of 
+penalties is the highest. 
+
+### Exercise 11.8
+Get the number of each player who has incurred twice as many 
+penalties as player 104. 
+
+### Exercise 11.9
+Get the numbers of the players who have incurred as many penalties 
+as player 6. 

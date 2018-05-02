@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.lou.jeran.util.Util;
+
 /**
  * Core logic which determines what the world is going to look like after
  * processing the request.
@@ -48,7 +50,7 @@ public class Core {
     }
 
     private static String run(String[] sqls, Db db, View view) throws SQLException {
-        if (sqls.length == 0 || isBlank(sqls[0])) {
+        if (sqls.length == 0 || Util.isBlank(sqls[0])) {
             return "";
         } else {
             return view.table(tryQuery(db, sqls[0]));
@@ -98,7 +100,4 @@ public class Core {
         return new Table(tableName, header, rows);
     }
 
-    private static boolean isBlank(String str) {
-        return str == null || str.length() == 0;
-    }
 }
