@@ -1,5 +1,7 @@
 package org.lou.jeran;
 
+import static java.util.Arrays.asList;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -9,39 +11,44 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.function.IntFunction;
 
-import org.lou.jeran.util.Sql;
-
 /**
- * For now, create a new connection for every operation.
+ * A simple facade over JDBC database connection. This is meant for single user;
+ * it creates a new connection for each operation.
  *
  * @author Phuc
  */
 public class Db {
 
-    /**
-     * Create an in-mem db given a script for initializing data
-     */
-    public static Db h2(String name, String initScript) throws Exception {
-        // use DB_CLOSE_DELAY=-1 to keep the db open
-        String url = String.format("jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1", name);
-        Db db = new Db(new org.h2.Driver(), url, "", "");
-
-        // init the db by executing a script
-        List<String> stmts = Sql.splitStatements(initScript);
-        db.execStmtsAsUnit(stmts);
-
-        return db;
-    }
-
+    private final String name;
     private final String url;
     private final String user;
     private final String password;
 
-    public Db(Driver driver, String url, String user, String password) throws Exception {
+    public Db(
+        String name,
+        Driver driver,
+        String url,
+        String user,
+        String password
+    ) throws Exception {
         loadDriver(driver);
+        this.name = name;
         this.url = url;
         this.user = user;
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns the table names that this database use.
+     */
+    public List<String> findTableNames() throws Exception {
+        return asList(
+            "PLAYERS", "TEAMS", "MATCHES",
+            "PENALTIES", "COMMITTEE_MEMBERS");
     }
 
     /**
@@ -57,7 +64,8 @@ public class Db {
      * statements.
      */
     public <T> T update(String sql, IntFunction<T> rf) throws SQLException {
-        try (Connection conn = newConnection(); Statement stmt = conn.createStatement();) {
+        try (Connection conn = newConnection();
+            Statement stmt = conn.createStatement();) {
             return rf.apply(stmt.executeUpdate(sql));
         }
     }
@@ -72,8 +80,8 @@ public class Db {
      */
     public <T> T query(String sql, RsMapper<T> mpr) throws SQLException {
         try (Connection conn = newConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql);) {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);) {
             return mpr.map(rs);
         }
     }
@@ -92,7 +100,9 @@ public class Db {
      * Execute sql-statements as a unit, i.e. commit if all succeed, rollback on
      * error
      */
-    public static void execStmtsAsUnit(Connection conn, Iterable<String> stmts) throws SQLException {
+    public static void execStmtsAsUnit(Connection conn, Iterable<String> stmts)
+        throws SQLException
+    {
         boolean autoCommit = conn.getAutoCommit();
         try (Statement stmt = conn.createStatement()) {
             conn.setAutoCommit(false);
@@ -102,7 +112,8 @@ public class Db {
             conn.commit();
         } catch (SQLException e) {
             conn.rollback();
-            throw new SQLException("Connection rollbacked on exception: " + e.getMessage(), e);
+            throw new SQLException(
+                "Connection rollbacked on exception: " + e.getMessage(), e);
         } finally {
             conn.setAutoCommit(autoCommit);
         }

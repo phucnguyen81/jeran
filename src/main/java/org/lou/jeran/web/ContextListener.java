@@ -8,6 +8,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import org.lou.jeran.Db;
+import org.lou.jeran.H2Db;
 import org.lou.jeran.View;
 import org.lou.jeran.util.IO;
 
@@ -32,7 +33,7 @@ public class ContextListener implements ServletContextListener {
         try {
             // loads the script to init db
             String sql = IO.readFromClasspath("/reset_db_h2.sql");
-            Db db = Db.h2("TENNIS", sql);
+            Db db = new H2Db("TENNIS", sql);
 
             ctx.setAttribute(Db.class.getName(), db);
         } catch (Exception e) {

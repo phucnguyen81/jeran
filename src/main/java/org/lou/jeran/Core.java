@@ -24,13 +24,22 @@ import org.lou.jeran.util.Util;
  */
 public class Core {
 
-    public static String response(String path, Map<String, String[]> parms, Db db, View view) throws SQLException {
+    public static String response(
+        String path,
+        Map<String, String[]> parms,
+        Db db,
+        View view)
+        throws SQLException
+    {
         if (path.equals("")) {
             return view.html(queryTables(db));
-        } else if (path.equals("run") && parms.containsKey("sql")) {
+        }
+        else if (path.equals("run") && parms.containsKey("sql")) {
             return run(parms.get("sql"), db, view);
-        } else {
-            String msg = String.format("Unrecognized path/parms %s %s", path, parms);
+        }
+        else {
+            String msg = String.format("Unrecognized path/parms %s %s", path,
+                parms);
             throw new IllegalArgumentException(msg);
         }
     }
@@ -39,8 +48,20 @@ public class Core {
      * Show relevant tables
      */
     private static List<Table> queryTables(Db db) {
+        try {
+            List<String> tableNames = db.findTableNames();
+            return queryTables(db, tableNames);
+        } catch (Exception e) {
+            return asList(errorTable(e));
+        }
+    }
+
+    /**
+     * Query tables given their names.
+     */
+    private static List<Table> queryTables(Db db, List<String> tableNames) {
         List<Table> tables = new ArrayList<>();
-        for (String name : asList("PLAYERS", "TEAMS", "MATCHES", "PENALTIES", "COMMITTEE_MEMBERS")) {
+        for (String name : tableNames) {
             String select = String.format("SELECT * FROM %s", name);
             Table table = tryQuery(db, select);
             table = table.rename(name);
@@ -49,10 +70,13 @@ public class Core {
         return tables;
     }
 
-    private static String run(String[] sqls, Db db, View view) throws SQLException {
+    private static String run(String[] sqls, Db db, View view)
+        throws SQLException
+    {
         if (sqls.length == 0 || Util.isBlank(sqls[0])) {
             return "";
-        } else {
+        }
+        else {
             return view.table(tryQuery(db, sqls[0]));
         }
     }
@@ -65,8 +89,13 @@ public class Core {
         try {
             return db.query(sql, Core::toTable);
         } catch (SQLException e) {
-            return new Table("Error", asList("Error"), asList(asList(e.getMessage())));
+            return errorTable(e);
         }
+    }
+
+    private static Table errorTable(Exception e) {
+        return new Table(
+            "Error", asList("Error"), asList(asList(e.getMessage())));
     }
 
     /**

@@ -14,10 +14,11 @@ public class DbTest extends TestBase {
     @Test
     public void canRunQuery() throws Exception {
         String sql = IO.readFromClasspath("/reset_db_h2.sql");
-        Db db = Db.h2("TENNIS", sql);
+        Db db = new H2Db("TENNIS", sql);
 
         db.query("SELECT * FROM PLAYERS LIMIT 5", rs -> {
-            assertEquals("Column count changed!", 12, rs.getMetaData().getColumnCount());
+            assertEquals("Column count changed!",
+                12, rs.getMetaData().getColumnCount());
             return rs;
         });
     }

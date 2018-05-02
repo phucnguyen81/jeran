@@ -1,3 +1,16 @@
+## DONE Get table names from db
+
+For H2, use the query:
+
+```sql
+
+SELECT TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_CATALOG = TENNIS
+  AND TABLE_SCHEMA = 'PUBLIC'
+  AND TABLE_TYPE = 'TABLE'
+```
+
 ## On refresh, move to the previous tab page the user is in
 Look like a job for cookie. Why? anything better?
 - cookie
