@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.lou.jeran.db.Db;
 import org.lou.jeran.util.Util;
 
 /**
@@ -29,16 +30,20 @@ public class App {
         this.view = view;
     }
 
-    public String response(String path, Map<String, String[]> parms)
+    /**
+     * Handles a request given its name and parameters. Returns the result as an
+     * html string.
+     */
+    public String handle(String name, Map<String, String[]> parms)
         throws SQLException
     {
-        if (path.equals(""))
+        if (name.equals(""))
             return view.html(queryTables());
-        else if (path.equals("run") && parms.containsKey("sql"))
+        else if (name.equals("run") && parms.containsKey("sql"))
             return run(parms.get("sql"));
         else
             throw new IllegalArgumentException(String.format(
-                "Unrecognized path/parms %s %s", path, parms));
+                "Unrecognized path/parms %s %s", name, parms));
     }
 
     /**
@@ -81,7 +86,7 @@ public class App {
     private Table tryQuery(String sql) {
         try {
             return db.query(sql, App::toTable);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return errorTable(e);
         }
     }

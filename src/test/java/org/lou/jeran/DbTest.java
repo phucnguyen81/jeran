@@ -1,7 +1,8 @@
 package org.lou.jeran;
 
 import org.junit.Test;
-
+import org.lou.jeran.db.Db;
+import org.lou.jeran.db.H2Db;
 import org.lou.jeran.util.IO;
 
 /**

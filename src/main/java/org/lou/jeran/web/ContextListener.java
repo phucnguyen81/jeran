@@ -6,8 +6,8 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import org.lou.jeran.App;
-import org.lou.jeran.H2Db;
 import org.lou.jeran.View;
+import org.lou.jeran.db.H2Db;
 import org.lou.jeran.util.IO;
 
 /**

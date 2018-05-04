@@ -1,4 +1,4 @@
-package org.lou.jeran.util;
+package org.lou.jeran.db;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.joining;
@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import org.lou.jeran.util.Lexer;
+import org.lou.jeran.util.Util;
 import org.lou.jeran.util.Lexer.Token;
 
 /**
@@ -15,7 +17,7 @@ import org.lou.jeran.util.Lexer.Token;
  *
  * @author phuc
  */
-public class Sql {
+public class SqlLexer {
 
     private static final Pattern LINE_COMMENT = Pattern.compile("--.*?$", Pattern.MULTILINE);
     private static final Pattern BLOCK_COMMENT = Pattern.compile("/\\*.+?\\*/", Pattern.DOTALL);

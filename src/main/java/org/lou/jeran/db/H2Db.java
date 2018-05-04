@@ -1,11 +1,9 @@
-package org.lou.jeran;
+package org.lou.jeran.db;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
-
-import org.lou.jeran.util.Sql;
 
 /**
  * H2 variant of Db.
@@ -21,7 +19,7 @@ public class H2Db extends Db {
         super(name, new org.h2.Driver(), getUrl(name), "", "");
 
         // init the db by executing a script
-        List<String> stmts = Sql.splitStatements(initScript);
+        List<String> stmts = SqlLexer.splitStatements(initScript);
         execStmtsAsUnit(stmts);
     }
 

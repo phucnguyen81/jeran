@@ -14,13 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.lou.jeran.App;
 
 /**
- * Front Controller collects relevant infos from request, session and
- * app-services (e.g. db, log) and hands them off to {@link Core}.
+ * Front Controller translates http-requests to app-requests then dispatches
+ * them to {@link App}.
  *
  * @author Phuc
  */
 @SuppressWarnings("serial")
-@WebServlet(asyncSupported = false, name = "FrontServlet", urlPatterns = { "/main/*" })
+@WebServlet(
+    asyncSupported = false,
+    name = "FrontServlet",
+    urlPatterns = { "/main/*" })
 public final class FrontServlet extends HttpServlet {
 
     @Override
@@ -29,19 +32,26 @@ public final class FrontServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request,
+        HttpServletResponse response)
+        throws ServletException, IOException
+    {
         process(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws ServletException, IOException
+    {
         process(request, response);
     }
 
-    private void process(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    private void process(HttpServletRequest request,
+        HttpServletResponse response)
+        throws ServletException, IOException
+    {
         response.setContentType("text/html;charset=utf-8");
         try (PrintWriter out = response.getWriter()) {
             out.write(response(request));
@@ -53,7 +63,7 @@ public final class FrontServlet extends HttpServlet {
         Map<String, String[]> parms = req.getParameterMap();
         try {
             App app = getContextAttr(App.class);
-            return app.response(path, parms);
+            return app.handle(path, parms);
         } catch (IllegalStateException | IllegalArgumentException ise) {
             return errorMessage("Application error", ise);
         } catch (SQLException sql) {
@@ -70,9 +80,11 @@ public final class FrontServlet extends HttpServlet {
         final String p = req.getPathInfo();
         if (p == null) {
             return "";
-        } else if (p.startsWith("/")) {
+        }
+        else if (p.startsWith("/")) {
             return p.replaceFirst("/", "");
-        } else {
+        }
+        else {
             return p;
         }
     }
@@ -83,15 +95,18 @@ public final class FrontServlet extends HttpServlet {
     private <T> T getContextAttr(Class<T> type) {
         Object attr = getServletContext().getAttribute(type.getName());
         if (attr == null) {
-            String msg = String.format("Resource type %s not initialized", type.getName());
+            String msg = String.format("Resource type %s not initialized",
+                type.getName());
             throw new IllegalStateException(msg);
-        } else {
+        }
+        else {
             return type.cast(attr);
         }
     }
 
     private String errorMessage(String type, Throwable cause) {
-        String msg = String.format("<p style='color:red;'>%s: %s<p>", type, cause.getMessage());
+        String msg = String.format("<p style='color:red;'>%s: %s<p>", type,
+            cause.getMessage());
         log(msg, cause);
         return msg;
     }
