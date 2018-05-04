@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Simple table data structure.
  *
- * @author Phuc
+ * @author phuc
  */
 public class Table {
 
