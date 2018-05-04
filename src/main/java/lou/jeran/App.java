@@ -1,4 +1,4 @@
-package org.lou.jeran;
+package lou.jeran;
 
 import static java.util.Arrays.asList;
 
@@ -12,8 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.lou.jeran.db.Db;
-import org.lou.jeran.util.Util;
+import lou.jeran.db.Db;
+import lou.jeran.util.Util;
 
 /**
  * Directly handles user requests.

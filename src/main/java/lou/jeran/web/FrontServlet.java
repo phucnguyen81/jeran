@@ -1,4 +1,4 @@
-package org.lou.jeran.web;
+package lou.jeran.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.lou.jeran.App;
+import lou.jeran.App;
 
 /**
  * Front Controller translates http-requests to app-requests then dispatches

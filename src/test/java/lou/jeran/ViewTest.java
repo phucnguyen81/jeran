@@ -1,4 +1,4 @@
-package org.lou.jeran;
+package lou.jeran;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertTrue;
@@ -6,6 +6,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.Test;
+
+import lou.jeran.Table;
+import lou.jeran.View;
 
 /**
  * Test pieces of templates that should not change often.

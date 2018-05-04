@@ -1,4 +1,4 @@
-package org.lou.jeran.db;
+package lou.jeran.db;
 
 import static java.util.Arrays.asList;
 

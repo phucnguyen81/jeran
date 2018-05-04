@@ -1,14 +1,15 @@
-package org.lou.jeran;
+package lou.jeran;
 
 import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.util.List;
 
-import org.lou.jeran.util.IO;
-import org.lou.jeran.util.Util;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroupFile;
+
+import lou.jeran.util.IO;
+import lou.jeran.util.Util;
 
 /**
  * Render domain data to html.

@@ -1,11 +1,12 @@
-package org.lou.jeran.util;
+package lou.jeran.util;
 
 import java.util.List;
 
 import org.junit.Test;
 
-import org.lou.jeran.TestBase;
-import org.lou.jeran.db.SqlLexer;
+import lou.jeran.TestBase;
+import lou.jeran.db.SqlLexer;
+import lou.jeran.util.IO;
 
 public class SqlTest extends TestBase {
 

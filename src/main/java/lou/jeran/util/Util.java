@@ -1,4 +1,4 @@
-package org.lou.jeran.util;
+package lou.jeran.util;
 
 import java.util.ArrayList;
 import java.util.List;

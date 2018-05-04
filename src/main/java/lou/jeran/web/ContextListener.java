@@ -1,14 +1,14 @@
-package org.lou.jeran.web;
+package lou.jeran.web;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import org.lou.jeran.App;
-import org.lou.jeran.View;
-import org.lou.jeran.db.H2Db;
-import org.lou.jeran.util.IO;
+import lou.jeran.App;
+import lou.jeran.View;
+import lou.jeran.db.H2Db;
+import lou.jeran.util.IO;
 
 /**
  * Create/release resources global to the app.

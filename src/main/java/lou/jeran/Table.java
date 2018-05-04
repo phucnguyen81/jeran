@@ -1,4 +1,4 @@
-package org.lou.jeran;
+package lou.jeran;
 
 import static java.util.Collections.emptyList;
 

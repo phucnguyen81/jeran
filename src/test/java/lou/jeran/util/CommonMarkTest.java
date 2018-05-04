@@ -1,4 +1,4 @@
-package org.lou.jeran.util;
+package lou.jeran.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -7,6 +7,8 @@ import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.junit.Test;
+
+import lou.jeran.util.IO;
 
 /**
  * Usage of common-mark markdown to html.

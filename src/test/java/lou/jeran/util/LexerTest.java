@@ -1,4 +1,4 @@
-package org.lou.jeran.util;
+package lou.jeran.util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,8 +6,9 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
-import org.lou.jeran.TestBase;
-import org.lou.jeran.util.Lexer.Match;
+import lou.jeran.TestBase;
+import lou.jeran.util.Lexer;
+import lou.jeran.util.Lexer.Match;
 
 public class LexerTest extends TestBase {
 

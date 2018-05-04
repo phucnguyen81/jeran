@@ -1,9 +1,10 @@
-package org.lou.jeran;
+package lou.jeran;
 
 import org.junit.Test;
-import org.lou.jeran.db.Db;
-import org.lou.jeran.db.H2Db;
-import org.lou.jeran.util.IO;
+
+import lou.jeran.db.Db;
+import lou.jeran.db.H2Db;
+import lou.jeran.util.IO;
 
 /**
  * Since the 'production' db is so small, can test it directly.

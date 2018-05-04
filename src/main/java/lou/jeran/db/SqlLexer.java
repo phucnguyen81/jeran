@@ -1,4 +1,4 @@
-package org.lou.jeran.db;
+package lou.jeran.db;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.joining;
@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import org.lou.jeran.util.Lexer;
-import org.lou.jeran.util.Util;
-import org.lou.jeran.util.Lexer.Token;
+import lou.jeran.util.Lexer;
+import lou.jeran.util.Util;
+import lou.jeran.util.Lexer.Token;
 
 /**
  * Support for handling sql
