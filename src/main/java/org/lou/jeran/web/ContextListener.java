@@ -1,13 +1,11 @@
 package org.lou.jeran.web;
 
-import java.io.IOException;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import org.lou.jeran.Db;
+import org.lou.jeran.App;
 import org.lou.jeran.H2Db;
 import org.lou.jeran.View;
 import org.lou.jeran.util.IO;
@@ -15,7 +13,7 @@ import org.lou.jeran.util.IO;
 /**
  * Create/release resources global to the app.
  * <p>
- * TODO use server log for logging?
+ * TODO inject server log into App?
  *
  * @author Phuc
  */
@@ -25,32 +23,25 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
-        try {
-            ctx.setAttribute(View.class.getName(), new View());
-        } catch (IOException e) {
-            throw new AssertionError("Failed to create view", e);
-        }
-        try {
-            // loads the script to init db
-            String sql = IO.readFromClasspath("/reset_db_h2.sql");
-            Db db = new H2Db("TENNIS", sql);
+        ctx.setAttribute(App.class.getName(), createApp());
+    }
 
-            ctx.setAttribute(Db.class.getName(), db);
+    private static App createApp() {
+        try {
+            String sql = IO.readFromClasspath("/reset_db_h2.sql");
+            return new App(new H2Db("TENNIS", sql), new View());
         } catch (Exception e) {
-            throw new AssertionError("Failed to connect to database", e);
+            throw new AssertionError("Failed to create App", e);
         }
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
-        Object view = ctx.getAttribute(View.class.getName());
-        if (view == null) {
-            ctx.log("", new IllegalStateException("Required template not found: " + View.class.getName()));
-        }
-        Object db = ctx.getAttribute(Db.class.getName());
-        if (db == null) {
-            ctx.log("", new IllegalStateException("Required database not found: " + Db.class.getName()));
+        Object app = ctx.getAttribute(App.class.getName());
+        if (app == null) {
+            ctx.log("", new IllegalStateException(
+                "Required app not found: " + App.class.getName()));
         }
     }
 

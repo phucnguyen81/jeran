@@ -15,42 +15,39 @@ import java.util.stream.Collectors;
 import org.lou.jeran.util.Util;
 
 /**
- * Core logic which determines what the world is going to look like after
- * processing the request.
- * <p>
- * TODO decouple from Db, should only work with domain concepts like Table
+ * Directly handles user requests.
  *
  * @author Phuc
  */
-public class Core {
+public class App {
 
-    public static String response(
-        String path,
-        Map<String, String[]> parms,
-        Db db,
-        View view)
+    private final Db db;
+    private final View view;
+
+    public App(Db db, View view) {
+        this.db = db;
+        this.view = view;
+    }
+
+    public String response(String path, Map<String, String[]> parms)
         throws SQLException
     {
-        if (path.equals("")) {
-            return view.html(queryTables(db));
-        }
-        else if (path.equals("run") && parms.containsKey("sql")) {
-            return run(parms.get("sql"), db, view);
-        }
-        else {
-            String msg = String.format("Unrecognized path/parms %s %s", path,
-                parms);
-            throw new IllegalArgumentException(msg);
-        }
+        if (path.equals(""))
+            return view.html(queryTables());
+        else if (path.equals("run") && parms.containsKey("sql"))
+            return run(parms.get("sql"));
+        else
+            throw new IllegalArgumentException(String.format(
+                "Unrecognized path/parms %s %s", path, parms));
     }
 
     /**
      * Show relevant tables
      */
-    private static List<Table> queryTables(Db db) {
+    private List<Table> queryTables() {
         try {
             List<String> tableNames = db.findTableNames();
-            return queryTables(db, tableNames);
+            return queryTables(tableNames);
         } catch (Exception e) {
             return asList(errorTable(e));
         }
@@ -59,35 +56,31 @@ public class Core {
     /**
      * Query tables given their names.
      */
-    private static List<Table> queryTables(Db db, List<String> tableNames) {
+    private List<Table> queryTables(List<String> tableNames) {
         List<Table> tables = new ArrayList<>();
         for (String name : tableNames) {
             String select = String.format("SELECT * FROM %s", name);
-            Table table = tryQuery(db, select);
+            Table table = tryQuery(select);
             table = table.rename(name);
             tables.add(table);
         }
         return tables;
     }
 
-    private static String run(String[] sqls, Db db, View view)
-        throws SQLException
-    {
-        if (sqls.length == 0 || Util.isBlank(sqls[0])) {
+    private String run(String[] sqls) throws SQLException {
+        if (sqls.length == 0 || Util.isBlank(sqls[0]))
             return "";
-        }
-        else {
-            return view.table(tryQuery(db, sqls[0]));
-        }
+        else
+            return view.table(tryQuery(sqls[0]));
     }
 
     /**
      * Run query to get result table or error table. TODO check sql for syntax
-     * error. TODO show result-set metadata.
+     * error.
      */
-    private static Table tryQuery(Db db, String sql) {
+    private Table tryQuery(String sql) {
         try {
-            return db.query(sql, Core::toTable);
+            return db.query(sql, App::toTable);
         } catch (SQLException e) {
             return errorTable(e);
         }
@@ -100,7 +93,7 @@ public class Core {
 
     /**
      * Consume entirely a result-set to make a table structure. TODO convert
-     * loops to functional reduction
+     * loops to functional reduction. TODO show result-set metadata.
      */
     private static Table toTable(ResultSet rs) throws SQLException {
         ResultSetMetaData meta = rs.getMetaData();

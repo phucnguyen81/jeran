@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.lou.jeran.Core;
-import org.lou.jeran.Db;
-import org.lou.jeran.View;
+import org.lou.jeran.App;
 
 /**
  * Front Controller collects relevant infos from request, session and
@@ -54,9 +52,8 @@ public final class FrontServlet extends HttpServlet {
         String path = getPath(req);
         Map<String, String[]> parms = req.getParameterMap();
         try {
-            Db db = getContextAttr(Db.class);
-            View view = getContextAttr(View.class);
-            return Core.response(path, parms, db, view);
+            App app = getContextAttr(App.class);
+            return app.response(path, parms);
         } catch (IllegalStateException | IllegalArgumentException ise) {
             return errorMessage("Application error", ise);
         } catch (SQLException sql) {
