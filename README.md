@@ -1,5 +1,5 @@
 # Description
-Help me do excercises in 'Introduction to SQL'
+Help me do exercises in 'Introduction to SQL'
 
 # Usage
 Launch:
