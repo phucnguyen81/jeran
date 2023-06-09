@@ -11,6 +11,5 @@
 ## Development with Docker
 
 - Build: `docker build -f Dockerfile -t jeran .`
-- Run: `docker run -d --name jeran -p 8080:8080 jeran`
+- Run web server: `docker run -d --name jeran -p 8080:8080 jeran`
 - Run to connect later: `docker run -d --name jeran -p 8080:8080 jeran sleep infinity`
-- Run on current data: `docker run -d --name jeran -p 8080:8080 -v .:/app jeran`
