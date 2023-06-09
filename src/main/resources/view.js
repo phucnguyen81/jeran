@@ -77,7 +77,7 @@ $(function() {
         var input = $("[name='input']", panel).get(0);
         var text = input.cm.doc.getValue();
         var output = $("[name='output']", panel);
-        $.post("main/run", {
+        $.post("app/run", {
             sql : text
         }, function(data, status) {
             output.html(data);

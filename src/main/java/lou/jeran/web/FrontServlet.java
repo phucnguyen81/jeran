@@ -23,7 +23,7 @@ import lou.jeran.App;
 @WebServlet(
     asyncSupported = false,
     name = "FrontServlet",
-    urlPatterns = { "/main/*" })
+    urlPatterns = { "/app/*" })
 public final class FrontServlet extends HttpServlet {
 
     @Override
@@ -105,8 +105,7 @@ public final class FrontServlet extends HttpServlet {
     }
 
     private String errorMessage(String type, Throwable cause) {
-        String msg = String.format("<p style='color:red;'>%s: %s<p>", type,
-            cause.getMessage());
+        String msg = String.format("%s: %s", type, cause.getMessage());
         log(msg, cause);
         return msg;
     }

@@ -43,7 +43,7 @@ public class App {
             return run(parms.get("sql"));
         else
             throw new IllegalArgumentException(String.format(
-                "Unrecognized path/parms %s %s", name, parms));
+                "Unrecognized path/parms: %s/%s", name, parms));
     }
 
     /**

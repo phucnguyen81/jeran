@@ -72,7 +72,7 @@
             <port>8080</port>
           </httpConnector>
           <webAppConfig>
-            <contextPath>/jeran</contextPath>
+            <contextPath>/</contextPath>
             <resourceBase>${jetty.resources}</resourceBase>
           </webAppConfig>
         </configuration>
