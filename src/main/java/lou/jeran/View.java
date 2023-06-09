@@ -69,7 +69,9 @@ public class View {
         ST st = stg.getInstanceOf(name);
         if (st == null) {
             throw new IllegalArgumentException(
-                    "Found no template named " + name + " in template group " + stg.getName());
+                String.format(
+                    "Found no template named %s in template group %s",
+                    name, stg.getName()));
         } else {
             return st;
         }

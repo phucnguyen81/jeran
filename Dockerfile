@@ -1,13 +1,17 @@
 FROM eclipse/ubuntu_jdk8
 
+USER user
+
 WORKDIR /app
 
-COPY pom.xml pom.xml
+COPY --chown=user:user pom.xml pom.xml
 
 RUN mvn clean dependency:resolve-plugins install 
 
-COPY . .
+COPY --chown=user:user . .
 
 EXPOSE 8080
 
-CMD ["mvn", "jetty:run"]
+ENTRYPOINT ["mvn"]
+
+CMD ["jetty:run"]
