@@ -67,6 +67,10 @@
         <configuration>
           <scanIntervalSeconds>3</scanIntervalSeconds>
           <webAppSourceDirectory>${jetty.resources}</webAppSourceDirectory>
+          <httpConnector>
+            <host>0</host>
+            <port>8080</port>
+          </httpConnector>
           <webAppConfig>
             <contextPath>/jeran</contextPath>
             <resourceBase>${jetty.resources}</resourceBase>
