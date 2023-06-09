@@ -12,6 +12,6 @@ COPY --chown=user:user . .
 
 EXPOSE 8080
 
-ENTRYPOINT ["mvn"]
+ENTRYPOINT []
 
-CMD ["jetty:run"]
+CMD ["mvn", "jetty:run"]
