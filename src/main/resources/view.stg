@@ -49,12 +49,20 @@ body(tables, exercises, examples) ::= <<
   <div class="container">
     <div class="navbar-collapse">
       <ul class="nav nav-pills" role="tablist">
-        <li role="presentation" class="active"><a href="#tables" aria-controls="tables" role="tab" data-toggle="tab">Tables</a></li>
-        <li role="presentation"><a href="#session" aria-controls="session" role="tab" data-toggle="tab">Session</a></li>
-        <li role="presentation"><a href="#examples" aria-controls="examples" role="tab" data-toggle="tab">Examples</a></li>
-        <li role="presentation"><a href="#exercises" aria-controls="exercises" role="tab" data-toggle="tab">Exercises</a></li>
+        <li role="presentation" class="active">
+          <a href="#tables" aria-controls="tables" role="tab" data-toggle="tab">Tables</a>
+        </li>
+        <li role="presentation">
+          <a href="#session" aria-controls="session" role="tab" data-toggle="tab">Session</a>
+        </li>
+        <li role="presentation">
+          <a href="#examples" aria-controls="examples" role="tab" data-toggle="tab">Examples</a>
+        </li>
+        <li role="presentation">
+          <a href="#exercises" aria-controls="exercises" role="tab" data-toggle="tab">Exercises</a>
+        </li>
       </ul>
-    </div><!-- /.nav-collapse -->
+    </div><!-- /.navbar-collapse -->
   </div><!-- /.container -->
 </nav>
 

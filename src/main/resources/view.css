@@ -1,5 +1,7 @@
 nav { background: lightgray; }
 
+ul.nav { margin: 10px; }
+
 textarea.vert { resize: vertical; }
 
 .CodeMirror { height: auto; }

@@ -1,33 +1,6 @@
 // Add style to sections (using Bootstrap)
 $(function() {
-    function applyStyle($section) {
-        // wrap each exercise to make a column
-        $section.find('h3').each((idx, exer) => {
-            $(exer).nextUntil('h3').addBack()
-                .wrapAll('<div class="col-lg-4 col-md-6"></div>');
-        });
-    
-        // reset columns so that columns that does not fit on current line
-        // would be properly moved to next line 
-        $section.children('div').each((idx, col) => {
-            if (idx === 0) return;
-            let $col = $(col);
-            if (idx % 3 === 0) {
-                // reset columns for lg size
-                $col.before('<div class="clearfix visible-lg-block"></div>');
-            }
-            if (idx % 2 === 0) {
-                // reset columns for md size
-                $col.before('<div class="clearfix visible-md-block"></div>');
-            }
-        });
-
-        // make a single row
-        $section.wrapInner('<div class="row"></div>');
-    }
-
-    applyStyle($('#exercises'));
-    applyStyle($('#examples'));
+    // TODO: code here to apply layout
 });
 
 // Add actions to the Session section
